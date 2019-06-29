@@ -13,10 +13,10 @@ static
 //
 begin sampleProg;
 
-stdout.put("BBBBB     RRRRR", nl);
-stdout.put("B    B    R    R", nl);
-stdout.put("BBBBB     RRRRR", nl);
-stdout.put("B    B    R   R", nl);
-stdout.put("BBBBB     R    R", nl);
+stdout.put("BBBBB",    "RRRRR":10, nl);
+stdout.put("B    B",   "R    R":10, nl);
+stdout.put("BBBBB",    "RRRRR":10, nl);
+stdout.put("B    B",   "R   R":9, nl);
+stdout.put("BBBBB",    "R    R":11, nl);
 
 end sampleProg;
