@@ -2,16 +2,19 @@
 //Course Number: Section 1705
 //Date: June 28, 2019
 //Purpose: To display one's favorite team mascot on the screen in Large letters
-//Input: N/A
+//Input: None
 //Output: BRUINS
 
-//File: sampleProg.hla
-program sampleProg;
+//File: favMascot.hla
+program favMascot;
 #include ( "stdlib.hhf" );
 static
 
-//
-begin sampleProg;
+//Purpose: Print out "Bruins" using 5 stdout.put statements
+//Description of parameters: N/A
+//Description of return values: N/A
+//Input: None
+begin favMascot;
 
 stdout.put("BBBBB",    "RRRRR":10, nl);
 stdout.put("B    B",   "R    R":10, nl);
@@ -19,4 +22,4 @@ stdout.put("BBBBB",    "RRRRR":10, nl);
 stdout.put("B    B",   "R   R":9, nl);
 stdout.put("BBBBB",    "R    R":11, nl);
 
-end sampleProg;
+end favMascot;
