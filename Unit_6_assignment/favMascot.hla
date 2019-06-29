@@ -1,0 +1,22 @@
+//Programmer Name: Iman Arfa-Zanganeh
+//Course Number: Section 1705
+//Date: June 28, 2019
+//Purpose: To display one's favorite team mascot on the screen in Large letters
+//Input: N/A
+//Output: BRUINS
+
+//File: sampleProg.hla
+program sampleProg;
+#include ( "stdlib.hhf" );
+static
+
+//
+begin sampleProg;
+
+stdout.put("BBBBB     RRRRR", nl);
+stdout.put("B    B    R    R", nl);
+stdout.put("BBBBB     RRRRR", nl);
+stdout.put("B    B    R   R", nl);
+stdout.put("BBBBB     R    R", nl);
+
+end sampleProg;
