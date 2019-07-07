@@ -11,7 +11,7 @@ program boxIt;
 static
 
 n : int8 := 0;
-i : int8 := 1;  //Purpose: initialization of outer loop
+i : int8 := 0;  //Purpose: initialization of outer loop
 j : int8 := 1;  //Purpose: initialization of inner loop
 
 //Purpose: 
@@ -24,20 +24,36 @@ begin boxIt;
 stdout.put("Gimme a decimal value to use as n: ");
 stdin.get(n);
 
+forLoopOuter:
+initializeForLoop:
+forLoopTerminationOuter:
+  mov(n, AL);
+  cmp(i, AL);
+  jnl forLoopDoneOuter;
+//forLoopBodyOuter:
 
 
 forLoopInner:
-initializeForLoop:
-  mov(1, i);
+//initializeForLoop:
+  mov(1, j);  //reinitializes to 1 everytime inner loop is called
 forLoopTerminationInner:
   mov(n, AH);
-  cmp(i, AH);
+  cmp(j, AH);
   jg forLoopDoneInner;
 //forLoopBodyInner:
-  stdout.put(i);
+  stdout.put(j);
 //forLoopIncInner:
-  inc(i);
+  inc(j);
   jmp forLoopTerminationInner;
 forLoopDoneInner:
+
+stdout.newln();
+
+//forLoopIncOuter:
+  inc(i);
+  jmp forLoopOuter;
+forLoopDoneOuter:
+
+
 
 end boxIt;
