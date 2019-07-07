@@ -1,0 +1,80 @@
+//Programmer Name: Iman Arfa-Zanganeh
+//Course Number: Section 1705
+//Date: July 7, 2019
+//Purpose: Prompt user for int8 value to be inspected and then printed out in its binary format
+//Input: int8 signed value 
+//Output: Binary format of int8 value
+
+
+//File: binaryOutput.hla
+program binaryOutput;
+#include ("stdlib.hhf");
+static
+
+_inputValue : int8 := 0; //Purpose: stores the int8 value inputted by the user that will eventually be printed in binary format
+
+//Purpose: Print out the binary format of _inputValue using the carry bit found within the EFLAGS register and the LAHF instruction  
+//Description of parameters: _inputValue is an int8 value that will store user input; CH is an 8 bit register that will temporarily hold _inputValue; AH is an 8 bit register that will hold _inputValue in its binary format, which will ultimately be printed out
+//Description of return values: N/A
+//Input: in8 signed value that will be stored in _inputValue.
+//Output: Binary format of int8 value
+begin binaryOutput;
+
+stdout.put("Gimme a decimal value to print: ");
+stdin.get(_inputValue);
+
+mov(0, AH);//Initializes AH to 0
+mov(_inputValue, CH);
+
+stdout.put(_inputValue, " is ");
+
+//First digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 7th indexed bit in CH, which is the 7th indexed bit in _inputValue 
+lahf();
+and(%0000_0001, AH);//Every bit except the 0th indexed bit in AH is masked
+stdout.puti8(AH);//Prints out AH as a decimal value
+
+//Second digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 6th indexed bit in CH, which is the 5th indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+//Third digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 5th indexed bit in CH, which is the 5th indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+//Fourth digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 4th indexed bit in CH, which is the 4th indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+//Fifth digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 3rd indexed bit in CH, which is the 3rd indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.put("_");//improves readibility for the binary format of _inputValue
+stdout.puti8(AH);
+
+//Sixth digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 2nd indexed bit in CH, which is the 2nd indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+//Seventh digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 1st indexed bit in CH, which is the 1st indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+//Eighth digit of _inputValue
+rol(1, CH);//High Order Bit is now in carry bit. Carry bit is now the 0th indexed bit in CH, which is the 0th indexed bit in _inputValue
+lahf();
+and(%0000_0001, AH);
+stdout.puti8(AH);
+
+end binaryOutput;

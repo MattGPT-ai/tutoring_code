@@ -1,9 +1,9 @@
 //Programmer Name: Iman Arfa-Zanganeh
 //Course Number: Section 1705
 //Date: June 28, 2019
-//Purpose: To display one's favorite team mascot on the screen in Large letters
+//Purpose: To display one's favorite team mascot on the screen in large letters
 //Input: None
-//Output: BRUINS
+//Output: BRUIN
 
 //File: favMascot.hla
 program favMascot;
@@ -16,10 +16,10 @@ static
 //Input: None
 begin favMascot;
 
-stdout.put("BBBBB",    "RRRRR":10, nl);
-stdout.put("B    B",   "R    R":10, nl);
-stdout.put("BBBBB",    "RRRRR":10, nl);
-stdout.put("B    B",   "R   R":9, nl);
-stdout.put("BBBBB",    "R    R":11, nl);
+stdout.put("BBBBB",    "RRRRR":10,        "U      U":13,         "IIIIII":11,     "N       N":14, nl);
+stdout.put("B    B",   "R    R":10,       "U      U":12,           "II":9,        "N N     N":16, nl);
+stdout.put("BBBBB",    "RRRRR":10,        "U      U":13,           "II":9,        "N   N   N":16, nl);
+stdout.put("B    B",   "R   R":9,          "U    U":12,            "II":10,       "N     N N":16, nl);
+stdout.put("BBBBB",    "R    R":11,         "UUUU":10,           "IIIIII":13,     "N       N":14, nl);
 
 end favMascot;

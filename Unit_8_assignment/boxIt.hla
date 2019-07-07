@@ -1,0 +1,43 @@
+//Programmer Name: Iman Arfa-Zanganeh
+//Course Number: Section 1705
+//Date: July 7, 2019
+//Purpose: Prompt user for int8 value that will be displayed in a repeated digit pattern starting with that number. The repeated digit pattern will show all the numbers from 1 up to that number, each on each row, repeated that number of times
+//Input: int8 unsigned value. Value is unsigned due to the minimum value being 1(no negative numbers)
+//Output: repeated pattern starting with the number inputted that will be repeated that number of times
+
+//File boxIt.hla
+program boxIt;
+#include ("stdlib.hhf");
+static
+
+n : int8 := 0;
+i : int8 := 1;  //Purpose: initialization of outer loop
+j : int8 := 1;  //Purpose: initialization of inner loop
+
+//Purpose: 
+//Description of parameters: 
+//Description of return values: 
+//input: int8 value that will be stored in n
+//output: repeated pattern starting with the number inputted that will be repeated that number of times
+begin boxIt;
+
+stdout.put("Gimme a decimal value to use as n: ");
+stdin.get(n);
+
+
+
+forLoopInner:
+initializeForLoop:
+  mov(1, i);
+forLoopTerminationInner:
+  mov(n, AH);
+  cmp(i, AH);
+  jg forLoopDoneInner;
+//forLoopBodyInner:
+  stdout.put(i);
+//forLoopIncInner:
+  inc(i);
+  jmp forLoopTerminationInner;
+forLoopDoneInner:
+
+end boxIt;
