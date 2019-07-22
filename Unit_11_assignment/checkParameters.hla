@@ -1,0 +1,93 @@
+//Programmer Name: Iman Arfa-Zanganeh
+//Course Number: Section 1705
+//Date: July 20, 2019
+//Purpose: To implement a function that correctly identifies when all four of its parameters are the same. The function returns a boolean value in AL (1 when all four values are equal; 0 otherwise)
+//Input: 4 int16 values obtained via user input
+//Output: Returns a boolean value of 1 if all 4 int16 values are equal, and 0 otherwise
+
+program checkParameters;
+#include ("stdlib.hhf");
+static
+
+W : int16 := 0;// Purpose: Stores user input
+X : int16 := 0;// Purpose: Stores user input
+Y : int16 := 0;// Purpose: Stores user input
+Z : int16 := 0;// Purpose: Stores user input
+
+//Purpose: Return a boolean value that will be stored in the register AL
+//Description of parameters: w,x,y, and z are int16 values that will store the values found within W,X,Y, and Z respectively;  AL is an 8 bit register that will store a boolean value depending on whether w,x,y, and z are all equal to each other or not.
+//Description of return values: Function will return 1 if w,x,y, and z are equal to each other, and 0 otherwise
+//input: int16 values w,x,y, and z
+//output: 1 if w,x,y, and z are equal to each other; 0 otherwise
+
+// Function theSame
+procedure theSame(w:int16; x:int16; y:int16; z:int16); @nodisplay; @noframe;
+static
+
+returnAddress : dword;
+
+// This procedure returns its answer in EAX; therefore it does not need to be saved.  No other registers need to be saved since no other register is being used.
+
+begin theSame;
+
+pop(returnAddress);// Obtain return address from stack
+ 
+pop(z);// Obtain the value stored in z from stack
+pop(y);// Obtain the value stored in y from stack
+pop(x);
+pop(w);
+
+push(returnAddress);// Push back return address to the stack
+
+mov(x, BX);
+mov(y, CX);
+mov(z, DX);
+
+// Check for if all parameters are equal to each other
+cmp(w, BX);
+jne notEqualParameters;
+cmp(BX, CX);
+jne notEqualParameters;
+cmp(CX, DX);
+jne notEqualParameters;
+
+// If all parameters are equal to each other
+stdout.put("Same.  ");
+mov(1, AL);
+jmp exitFunction;
+
+notEqualParameters:
+stdout.put("Not the same.  ");
+mov(0, AL);
+jmp exitFunction;
+
+exitFunction:
+ret();
+
+end theSame;
+
+// Main program
+begin checkParameters;
+
+stdout.put("Feed Me W: ");
+stdin.get(W);
+
+stdout.put("Feed Me X: ");
+stdin.get(X);
+
+stdout.put("Feed Me Y: ");
+stdin.get(Y);
+
+stdout.put("Feed Me Z: ");
+stdin.get(Z);
+
+push(W);// Push the value stored in W into the stack
+push(X);// Push the value stored in X into the stack
+push(Y);
+push(Z);
+
+call theSame;
+
+stdout.put("AL = ");
+stdout.puti8(AL);// Prints out AL register value in decimal format
+end checkParameters;
