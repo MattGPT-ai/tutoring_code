@@ -1,0 +1,61 @@
+program computeVolumes;
+#include ("stdlib.hhf");
+static
+
+R : real32 := 0;
+H : real32 := 0;
+
+procedure volumeFinder(r:real32; h:real32); @nodisplay; @noframe;
+static
+
+returnAddress : dword;
+_volumeSphere : real32 := 0;
+_volumeCube : real32 := 0;
+_volumeCylinder : real32 := 0;
+
+begin volumeFinder;
+
+pop(returnAddress);// Obtain return address from stack
+
+pop(r);// Obtain the value stored in r from stack
+pop(h);
+
+push(returnAddress);// Push back return address to the stack
+
+finit();
+fld(r);
+fld(r);
+fmulp();// r * r
+fld(r);
+fmulp();// r * r * r
+fldpi();
+fmulp();// r * r * r * pi
+fld(1.33333);
+fmulp();// r * r * r * pi * 4/3
+fstp(_volumeSphere);
+
+//fdiv( sti, st0 ); // ST0 := ST0/STi
+
+stdout.put("Volume of a sphere = ", _volumeSphere);
+ret();
+
+end volumeFinder;
+
+
+
+begin computeVolumes;
+
+stdout.put("Lemme calculate the volumes of various things!");
+stdout.newln();
+
+stdout.put("Gimme r: ");
+stdin.get(R);
+
+stdout.put("Gimme h: ");
+stdin.get(H);
+
+push(R);
+push(H);
+
+call volumeFinder;
+end computeVolumes;
