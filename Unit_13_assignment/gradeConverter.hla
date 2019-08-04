@@ -1,0 +1,54 @@
+program gradeConverter;
+#include ("stdlib.hhf");
+static
+
+letterGrade : byte := 0;
+_percentage : real32 := 0;
+
+procedure grader(percentage : real32); @nodisplay; @noframe;
+static
+
+returnAddress : dword;
+
+begin grader;
+
+pop(returnAddress);
+pop(percentage);
+
+push(returnAddress);
+
+finit();
+fld(61.0);              // Load X.
+fld(percentage);              // Load Y.
+fcomp();               // with no args, works with st0 and st1
+fstsw(AX);           // copy status into ax
+sahf();               // copy ax into EFLAGS
+sete(AL);            // al = true if st1 < st0
+cmp(AL, 1);          // test for true
+je gradeIsF;
+//jmp checkForD;
+
+gradeIsF:
+mov($46, AL);
+jmp exitFunction;
+
+exitFunction:
+ret();
+end grader;
+
+
+//Main program
+begin gradeConverter;
+
+stdout.put("Feed Me: ");
+stdin.get(_percentage);
+
+push(_percentage);
+
+call grader;
+
+stdout.put("that's the grade: ");
+stdout.putc(AL);
+stdout.newln();
+
+end gradeConverter;
