@@ -18,20 +18,84 @@ pop(percentage);
 push(returnAddress);
 
 finit();
-fld(61.0);              // Load X.
-fld(percentage);              // Load Y.
-fcomp();               // with no args, works with st0 and st1
-fstsw(AX);           // copy status into ax
-sahf();               // copy ax into EFLAGS
-sete(AL);            // al = true if st1 < st0
-cmp(AL, 1);          // test for true
+fld(60.0); 
+fld(percentage);
+fcomp();        
+fstsw(AX);      
+sahf();         
+setb(AL);       
+cmp(AL, 1);     
 je gradeIsF;
-//jmp checkForD;
+jmp checkForD;
 
 gradeIsF:
 mov($46, AL);
 jmp exitFunction;
 
+checkForD:
+finit();
+fld(70.0);
+fld(percentage);
+fcomp();        
+fstsw(AX);      
+sahf();         
+setb(AL);       
+cmp(AL, 1);
+je gradeIsD;
+jmp checkForC;
+
+gradeIsD:
+mov($44, AL);
+jmp exitFunction;
+
+checkForC:
+finit();
+fld(80.0);    
+fld(percentage);
+fcomp();        
+fstsw(AX);      
+sahf();         
+setb(AL);
+cmp(AL, 1); 
+je gradeIsC;
+jmp checkForB;
+
+gradeIsC:
+mov($43, AL);
+jmp exitFunction;
+
+checkForB:
+finit();
+fld(90.0);    
+fld(percentage);
+fcomp();        
+fstsw(AX);      
+sahf();         
+setb(AL);
+cmp(AL, 1);
+je gradeIsB;
+jmp checkForA;
+
+gradeIsB:
+mov($42, AL);
+jmp exitFunction;
+
+checkForA:
+finit();
+fld(100.0);
+fld(percentage);
+fcomp();
+fstsw(AX);
+sahf();
+setb(AL);
+cmp(AL, 1);
+je gradeIsA;
+
+gradeIsA:
+mov($41, AL);
+jmp exitFunction;
+
+jmp exitFunction;
 exitFunction:
 ret();
 end grader;
