@@ -1,0 +1,61 @@
+program lengthOfString;
+#include ("stdlib.hhf");
+#include ("cs17string.hla");
+static
+
+baseStringAddress : dword;
+
+procedure strlen(baseStringAddress: dword); @nodisplay; @noframe;
+static
+
+returnAddress : dword;
+stringDataLength : uns16 := 65535; //Decided to use maximum length just due to pure convenience. Can be changed based on user discretion
+balanceStack : word;//used to balance stack such that it is an even multiple of 32 bits
+holdAddress: dword;
+begin strlen;
+
+pop(returnAddress);
+pop(baseStringAddress);
+
+push(EBX);
+push(stringDataLength);
+
+call gets;
+push(balanceStack);
+//stdout.put("Lit1");
+push(returnAddress);
+//stdout.put("Lit2");
+
+mov(EBX, holdAddress);
+stdout.put(holdAddress);
+whileLoop:
+mov(0, CH);
+whileLoopTermination:
+cmp([EBX], CH);
+je whileLoopEnd;
+whileLoopBody:
+//stdout.put("Lit5");
+inc(AL);
+jmp whileLoopTermination;
+whileLoopEnd:
+
+ret();
+end strlen;
+
+
+
+
+begin lengthOfString;
+
+stdout.put("Feed Me: ");
+
+mov(0, AL);// Initializing register
+
+mov(&baseStringAddress, EBX);
+push(baseStringAddress);
+
+call strlen;
+
+stdout.puti8(AL);
+
+end lengthOfString;
