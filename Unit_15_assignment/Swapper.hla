@@ -2,86 +2,83 @@
 program SwapProgram;
 #include( "stdlib.hhf" );
 static
-
-X : int8 := 0; // the user data
-Y : int8 := 0;
-Z : int8 := 0;
+iValue1 : int8 := 0; // the user data
+iValue2 : int8 := 0;
 // this procedure swaps the contents of i and j, 
 // 2 reference parameters
 // although byte variables are passed as parameters, 
 // no stack alignment is necessary because 32-bit 
 // addresses are being sent instead
+
 procedure swap( var i: int8; var j : int8 ); @nodisplay; @noframe;
 // uses the registers EDX, ECX and EBX
 static
-
 dReturnAddress : dword;
-iTemporary : int16;
-holdX : int32;
-holdY : int32;
-holdZ : int32;
+iTemporary : int8;
+dEDXRegister : dword := 0; // preserve EDX 
+dECXRegister : dword := 0; // preserve ECX
+dEBXRegister : dword := 0; // preserve EBX
+holdAddress : dword := 0;
+
 begin swap;
 // entry sequence
-
+// preserve registers
+mov( EBX, dEBXRegister );
+mov( ECX, dECXRegister );
+mov( EDX, dEDXRegister );
 pop( dReturnAddress ); // This is the return address
-pop(EDX); // This is the address of Z
-pop( ECX ); // This is the address of Y
-pop( EBX ); // This is the address of X
+pop( EBX ); // This is the address of j
+pop( ECX ); // This is the address of i
 // push back the return address
 push( dReturnAddress );
-
-//stdout.put(EBX);
-//stdout.newln();
-//stdout.put([EBX])
-//stdout.newln()
-//stdout.put(ECX);
-//stdout.newln();
-//stdout.put([ECX])
-//stdout.newln()
-
-mov([EBX], holdX);
-mov([ECX], holdY);
-
-cmp(holdX, ECX);
-jg swapXAndY;
-//cmp(EBX, EDX);
-//jg swapXAndZ;
+// preserve registers
+push( dEDXRegister );
+push( dECXRegister );
+push( dEBXRegister );
 // begin sub-task
+
+mov([EBX], ESI);
+mov([ECX], holdAddress);
+
+stdout.put(holdAddress); // [ECX]
+stdout.newln();
+stdout.put(ESI);
+cmp([ECX], ESI);
+//stdout.put("test1");
+jg swapValues;
 jmp exitSequence;
+//stdout.put("test2");
 
-swapXAndY:
-mov( [EBX], ESI ); // ESI = y
-mov( SI, iTemporary ); // temporary = y
-mov( [ECX], ESI ); // ESI = x
-mov( SI, [EBX] ); // j = x
-mov( iTemporary, SI ); // ESI = y
-mov( SI, [ECX] ); // x = temporary = y
+swapValues:
+mov( [EBX], EDX ); // EDX = j
+mov( DL, iTemporary ); // temporary = j
+mov( [ECX], EDX ); // EDX = i
+mov( DL, [EBX] ); // j = i
+mov( iTemporary, DL ); // EDX = j
+mov( DL, [ECX] ); // i = temporary
 
-exitSequence:
 // exit sequence
+// restore registers
+exitSequence:
+pop( EBX );
+pop( ECX );
+pop( EDX );
 // transfer control 
 ret( ) ;
 end swap;
 
 begin SwapProgram;
 stdout.put( "gimme a value to swap: " );
-stdin.get(X);
+stdin.get( iValue1 );
 stdout.put( "gimme another value to swap:" );
-stdin.get(Y);
-stdout.put("gimme a third value to swap: ");
-stdin.get(Z);
-
-lea(EAX, X); // get address of X
-push( EAX );//push x
-lea(EAX, Y); // get address of Y
-push( EAX );//push y
-lea(EAX, Z);// get address of Z
-push(EAX);//push z
-
+stdin.get( iValue2 );
+lea( EAX, iValue1 ); // get address of iValue1
+push( EAX );
+lea( EAX, iValue2 ); // get address of iValue2
+stdout.newln();
+push( EAX );
 stdout.put( "swapping...", nl );
 call swap;
-
-stdout.put( "X = ", X, nl );
-
-stdout.put( "Y = ", Y, nl );
+stdout.put( "iValue1 = ", iValue1, nl );
+stdout.put( "iValue2 = ", iValue2, nl );
 end SwapProgram;
